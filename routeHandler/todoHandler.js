@@ -9,30 +9,23 @@ const Todo = new mongoose.model('Todo', todoSchema);
 
 // Get All the Todo
 router.get('/', async (req, res) => {
-    await Todo.find({})
-    .select({
-        _id: 0,
-        __v: 0,
-        date: 0,
-    })
-    // .limit(2)
-    .then(function (response) {
+    try {
+        const data = await Todo.find({}).select({_id: 0, __v: 0, date: 0});
         res.status(200).json({
-            data: response,
+            data: data,
             message: "All Todos",
-        });
-    }).catch(function (error) {
+        }); 
+    } catch (error) {
         res.status(500).json({
             message: "There was a server side error!",
             error: error.message,
         });
-    });
+    }
 });
 
-
 // Get a specific Todo
-router.get('/:id', async (req, res) => {
-    await Todo.find({
+router.get('/:id', (req, res) => {
+     Todo.find({
         _id: req.params.id,
     })
         .then(function (response) {
@@ -61,8 +54,6 @@ router.post('/', async (req, res) => {
         });
     });
 });
-
-
 
 // Create a multiple Todo
 router.post('/all', async (req, res) => {
