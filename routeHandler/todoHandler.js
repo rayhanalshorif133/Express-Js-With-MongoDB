@@ -3,8 +3,27 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const todoSchema = require('../schemas/todoSchema');
 const Todo = new mongoose.model('Todo', todoSchema);
+const checkLogin = require('../middlewares/checkLogin');
 
 
+
+
+
+// Get All the Todo
+router.get('/',checkLogin, async (req, res) => {
+    try {
+        const data = await Todo.find({}).select({_id: 0, __v: 0, date: 0});
+        res.status(200).json({
+            data: data,
+            message: "All Todos",
+        }); 
+    } catch (error) {
+        res.status(500).json({
+            message: "There was a server side error!",
+            error: error.message,
+        });
+    }
+});
 
 // query helper
 
@@ -56,21 +75,7 @@ router.get('/active-callback',  (req, res) => {
     });
 });
 
-// Get All the Todo
-router.get('/', async (req, res) => {
-    try {
-        const data = await Todo.find({}).select({_id: 0, __v: 0, date: 0});
-        res.status(200).json({
-            data: data,
-            message: "All Todos",
-        }); 
-    } catch (error) {
-        res.status(500).json({
-            message: "There was a server side error!",
-            error: error.message,
-        });
-    }
-});
+
 
 // Get a specific Todo
 router.get('/:id', (req, res) => {
