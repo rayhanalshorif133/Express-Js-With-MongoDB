@@ -1,27 +1,34 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
 const todoHandler = require('./routeHandler/todoHandler');
+const userHandler = require('./routeHandler/userHandler');
 
 // Express app initialization
 const app = express();
+dotenv.config();
 app.use(express.json());
 
 
 // Database connection with mongoose
 const url = "mongodb+srv://rayhan133:rayhan133@cluster0.jymenap.mongodb.net/todo?retryWrites=true&w=majority";
-mongoose.connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-    .then(() => {
-        console.log('Connected to MongoDB...');
-        return true;
+
+const dataBaseConnection = (async () => {
+    try {
+        await mongoose.connect(url, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log("Database connected successfully");
+    } catch (error) {
+        console.error('Could not connect to MongoDB...')
     }
-    )
-    .catch(err => console.error('Could not connect to MongoDB...'));
+});
 
 // Application Routes
 app.use("/todo", todoHandler);
+app.use("/user", userHandler);
 app.use(errorHandler);
 
 
@@ -37,4 +44,5 @@ function errorHandler(err, req, res, next) {
 
 app.listen(3000, () => {
     console.log('Example app listening on port 3000!');
+    dataBaseConnection();
 });

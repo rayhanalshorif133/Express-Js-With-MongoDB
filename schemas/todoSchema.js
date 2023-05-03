@@ -40,7 +40,6 @@ todoSchema.statics = {
 };
 
 todoSchema.query = {
-    
     byLanguage: function(language){
         return this.find({title: new RegExp(language, 'i')});
     }
