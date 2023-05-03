@@ -96,18 +96,21 @@ router.get('/:id', (req, res) => {
 });
 
 // Create a Todo
-router.post('/', async (req, res) => {
-    await Todo.collection.insertOne(req.body)
-        .then(function () {
+router.post('/', checkLogin, async (req, res) => {
+    try {
+        req.body.userId = req.userId;
+        const newTodo = await Todo.collection.insertOne(req.body);
         res.status(200).json({
+            data: newTodo,
             message: "Todo was inserted successfully",
         });
-        }).catch(function (error) {
+    } catch (error) {
         res.status(500).json({
             message: "There was a server side error!",
             error: error.message,
         });
-        });
+
+    }
 });
 
 // Create a multiple Todo
