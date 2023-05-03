@@ -35,3 +35,6 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     res.send('Hello World!');
 });
+
+
+module.exports = router;
