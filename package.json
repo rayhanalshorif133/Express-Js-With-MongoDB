@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
-    "git": "git add . && git commit -m 'set_package_json_command' && git push origin ToDo_Application"
+    "git": "git add . && git commit -m 'done_todo_application' && git push origin ToDo_Application"
   },
   "author": "",
   "license": "ISC",
