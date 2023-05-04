@@ -12,7 +12,8 @@ app.use(express.json());
 
 
 // Database connection with mongoose
-const url = "mongodb+srv://rayhan133:rayhan133@cluster0.jymenap.mongodb.net/todo?retryWrites=true&w=majority";
+// const url = "mongodb+srv://rayhan133:rayhan133@cluster0.jymenap.mongodb.net/todo?retryWrites=true&w=majority";
+const url = "mongodb+srv://rayhanalshorif133:rayhanalshorif133@cluster0.rfh2hxh.mongodb.net/todo_app?retryWrites=true&w=majority";
 
 const dataBaseConnection = (async () => {
     try {

@@ -2,19 +2,19 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
     {
-        name:{
+        name: {
             type: String,
             required: true,
         },
-        userName:{
+        userName: {
             type: String,
             required: true,
         },
-        password:{
+        password: {
             type: String,
             required: true,
         },
-        status:{
+        status: {
             type: String,
             enum: ['active', 'inactive'],
             default: 'active',
@@ -24,5 +24,8 @@ const userSchema = new mongoose.Schema(
     }
 );
 
+// make a json for insert user
+
+
 module.exports = userSchema;
-    
+

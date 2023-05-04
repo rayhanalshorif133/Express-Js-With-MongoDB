@@ -11,6 +11,7 @@ const User = new mongoose.model('User', userSchema);
 router.post('/signup', async (req, res) => {
 
     try {
+        console.log(req.body);
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
         const user = new User({
@@ -40,36 +41,36 @@ router.post('/signup', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-       const user = await User.find({userName: req.body.userName});
-       
-       if(user && user.length > 0){
+        const user = await User.find({ userName: req.body.userName });
+
+        if (user && user.length > 0) {
             const isValid = await bcrypt.compare(req.body.password, user[0].password);
 
             console.log(isValid);
 
-            if(isValid){
+            if (isValid) {
                 // generate token
                 const token = jsonwebtoken.sign({
-                        userName: user[0].userName,
-                        id: user[0]._id,
-                    },process.env.JWT_SECRET,{
-                        expiresIn: '1h',
-                    });
+                    userName: user[0].userName,
+                    id: user[0]._id,
+                }, process.env.JWT_SECRET, {
+                    expiresIn: '1h',
+                });
 
                 res.status(200).json({
                     access_token: token,
                     message: "Login successful!",
                 });
-            }else{
+            } else {
                 res.status(401).json({
                     message: "Authentication failed!",
                 });
             }
-         }else{
+        } else {
             res.status(401).json({
                 message: "Authentication failed!",
             });
-         }
+        }
     } catch (error) {
         res.status(500).json({
             message: "Sign up failed!",
