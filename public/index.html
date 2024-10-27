@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Express App on Vercel</title>
+</head>
+<body>
+    <h1>Welcome to My Simple Express App</h1>
+    <p>This is a simple Express server hosted on Vercel.</p>
+    <button id="fetch-greet">Fetch Greeting</button>
+    <p id="greeting-message"></p>
+
+    <script>
+        document.getElementById('fetch-greet').addEventListener('click', function() {
+            fetch('/api/greet')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('greeting-message').innerText = data.message;
+                })
+                .catch(error => console.error('Error fetching greeting:', error));
+        });
+    </script>
+</body>
+</html>
