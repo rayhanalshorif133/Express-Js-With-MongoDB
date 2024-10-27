@@ -2,6 +2,18 @@ const mongoose = require('mongoose');
 
 
 export default function handler(req, res) {
-    console.log(mongoose);
-    res.status(200).json({ message: 'Hello, welcome to my Express app!' });
+    const uri = "mongodb+srv://rayhanalshorifmongodb:8VznScZWt66XHCJ4@cluster0.hl4xe.mongodb.net/?retryWrites=true&w=majority";
+
+    var message = "";
+    mongoose.connect(uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+        .then(() => {
+            message = "Successfully connected to MongoDB!";
+        })
+        .catch((error) => {
+            message = "Connection error: " + error;
+        });
+    res.status(200).json({ message: message });
 }
